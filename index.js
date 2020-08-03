@@ -7,7 +7,7 @@ const request = require('request')
 const ms = require('ms')
 const fs = require('fs')
 const config = require('./config.json');
-const { Canvas } = require('canvas');
+
 
 bot.login(config.token);
 
@@ -231,15 +231,6 @@ bot.on('message', async msg=>{
         .setDescription(args[1] + ' (Feat: ' + args[2] +') \n───────────:white_circle:────── ◄◄⠀▐▐⠀►► 𝟸:𝟷𝟾 / 𝟹:𝟻𝟼⠀───○ :loud_sound:')
         msg.channel.send(playingEmbed)
         }}
-        case 'poopy':
-        const canvas = Canvas.createCanvas(640, 472)
-        const ctx = canvas.getContext('2d');
-        const backround = await Canvas.loadImage('./cancer.png')
-        ctx.drawImage(backround, 0, 0, canvas.width, canvas.height);
-        const avatar = awaitCanvas.loadImage(msg.author.displayAvatarURL({format: 'png'}))
-        ctx.drawImage(avatar, 351, 300, 100, 100)
-        msg.channel.send(canvas.toBuffer(), 'cancer.png')
-        break;
 
 }})
 
