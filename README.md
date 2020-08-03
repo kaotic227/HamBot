@@ -9,4 +9,4 @@ cheerio
 request
 ms
 fs
-canvas
+
