@@ -1,0 +1,23 @@
+{
+  "name": "discordbot",
+  "version": "1.0.0",
+  "description": "kaotics first ever discord bot. originally meant for Ham Headquarters but has now migrated to also be on the Official Hambot Server",
+  "main": "index.js",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "cheerio": "^1.0.0-rc.3",
+    "discord.io": "^2.5.3",
+    "discord.js": "^12.2.0",
+    "fs": "0.0.1-security",
+    "git": "^0.1.5",
+    "ms": "^2.1.2",
+    "request": "^2.88.2",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kaotic",
+  "license": "ISC"
+}
