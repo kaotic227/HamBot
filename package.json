@@ -1,7 +1,7 @@
 {
-  "name": "discordbot",
+  "name": "Hambot",
   "version": "1.0.0",
-  "description": "kaotics first ever discord bot. originally meant for Ham Headquarters but has now migrated to also be on the Official Hambot Server",
+  "description": "Kaotics first ever discord bot. originally meant for Ham Headquarters/Mickeyds11's server but is also on the Official Hambot Server",
   "main": "index.js",
   "dependencies": {
     "canvas": "^2.6.1",
