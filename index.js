@@ -10,7 +10,7 @@ const config = require('./config.json');
 const Canvas = require('canvas');
 
 bot.login(config.token);
-
+let activitySet1 = Math.floor(Math.random() * 3) + 1;
 bot.on('ready', () =>{
 console.log('Initiating Project R.U.B');
 let activitySet = Math.floor(Math.random() * 3) + 1;
@@ -27,16 +27,55 @@ let activitySet = Math.floor(Math.random() * 3) + 1;
     }
 })
 
-var ver = 20.7
+var ver = 20.8
 
 const prefix = 'ham ';
 
+bot.on('message', msg=>{
+    switch(msg.channel.id){
+        case '737067242100883586':
+        case '738309113867403336':
+        case '739617511548387438':
+        msg.react('🗿')
+        break;
+    }})
+
 //STREAM DETECTION START
 bot.on('message', msg=>{
+
 if(msg.channel.type == 'text') {
-if(msg.content == '@everyone mickeyds11 went live on Twitch') {bot.user.setActivity("HAM GOD", {type: "STREAMING", url: "https://www.twitch.tv/mickeyds11"});}
+if(msg.content == '@everyone mickeyds11 went live on Twitch') {bot.user.setActivity("HAM GOD", {type: "STREAMING", url: "https://www.twitch.tv/mickeyds11"});setTimeout(function(){
+    switch(activitySet1){
+        case 1:
+        bot.user.setActivity('Ham', { type: 'LISTENING' });
+        break
+        case 2:
+        bot.user.setActivity('With Ham', { type: 'PLAYING' });
+        break;
+        case 3:
+        bot.user.setActivity('Ham', { type: 'WATCHING' });
+        break;
+    }
+    
+}, ms('2h'));
+}
 if(msg.author.id == '338036054114435074'){ 
-if(msg.content.includes('twitch')) {bot.user.setActivity("HAM GOD", {type: "STREAMING", url: "https://www.twitch.tv/mickeyds11"});}
+if(msg.content.includes('twitch.tv/mick')) {bot.user.setActivity("HAM GOD", {type: "STREAMING", url: "https://www.twitch.tv/mickeyds11"});
+setTimeout(function(){
+    switch(activitySet1){
+        case 1:
+        bot.user.setActivity('Ham', { type: 'LISTENING' });
+        break
+        case 2:
+        bot.user.setActivity('With Ham', { type: 'PLAYING' });
+        break;
+        case 3:
+        bot.user.setActivity('Ham', { type: 'WATCHING' });
+        break;
+    }
+    
+}, ms('2h'));
+}
 }}})
 //STREAM DETECTION END
 
@@ -142,6 +181,8 @@ if(msg.channel.type == 'text') {
 
 
 }}})
+
+
 //REGULAR COMMANDS END
 
 
@@ -240,7 +281,7 @@ bot.on('message', async msg=>{
         case 'cancer':
         const canvas = Canvas.createCanvas(640, 472);
         const ctx = canvas.getContext('2d');
-        const backround = await Canvas.loadImage('./cancer.png')
+        const backround = await Canvas.loadImage('./Image_manipulation/cancer.png')
         ctx.drawImage(backround, 0, 0, canvas.width, canvas.height);
         const avatar = await Canvas.loadImage(msg.author.displayAvatarURL({ format: 'png' }));
         ctx.drawImage(avatar, 351, 200, 100, 100);
@@ -253,6 +294,10 @@ bot.on('message', async msg=>{
         msg.react('🇼')
         msg.react('🇦')
         msg.react('🇾')
+        break;
+        
+        case 'test':
+        
         break;
 
 }}})
@@ -295,7 +340,7 @@ case 'commands':
             .addField('Command #16', 'ham song (ham.song.(songname).(feature))')
             .addField('Command #17', 'ham rules (sends an embed of the ham headquarters rules)')
             .addField('Command #18', 'ham bug (ham.bug.(bug) allows anyone to submit a bug to kaotic through a simple command)')
-            .addField('Command #19', 'ham activity (ham.activity.(activitytype).(activity)) allows members with admin permissions to change hambots activity status')
+            .addField('Command #19', 'ham activity (ham.activity.(activitytype).(activity)) WARNING ONLY AVAILABLE TO ROLES NAMED Admin, Bot, or HAMGOD')
             .addField('Command #20', 'ham 8ball (ham.8ball.(question) allows anyone with the use of this command to ask the 8ball gods their deepest questions)')
             .addField('More Commands', 'Say "ham commands 3, pg 3, pg3, page3, or page 3 for more commands!"')
             .setFooter('Support at https://bit.ly/2ZarDN3')
