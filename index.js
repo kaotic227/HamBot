@@ -40,6 +40,12 @@ bot.on('message', msg=>{
         break;
     }})
 
+bot.on('guildMemberAdd', msg=>{
+if(msg.guild.id == '737065647363719240') {
+msg.member.roles.add('737066155201789992');
+}
+})
+
 //STREAM DETECTION START
 bot.on('message', msg=>{
 
@@ -84,6 +90,7 @@ bot.on('message', msg=>{
 if(msg.channel.type == 'text') {
 var huodfh = msg.content.toLowerCase();
 if(huodfh.includes('the farm')) {msg.channel.send('im sorry, we go by ham headquarters now, get with the times.')}
+if(huodfh.includes('who asked') || huodfh.includes('who tf asked') || huodfh.includes('who the fuck asked') ) {msg.channel.send('holy shit that was a LOL moment YOU just got beaned on 🤡 🤡 🤡')}
 }})
 
 bot.on('message', msg=>{
@@ -217,7 +224,7 @@ bot.on('message', async msg=>{
         break;
         
         case 'activity':
-        if(msg.member.roles.cache.find(r => r.name === "Admin") || msg.member.roles.cache.find(r => r.name === "Bot")) {
+        if(msg.member.roles.cache.find(r => r.name === "Admin") || msg.member.roles.cache.find(r => r.name === "Bot") || msg.member.roles.cache.find(r => r.name === "HAMGOD")) {
         if(!args[0]) return msg.reply('Please write an activity type and custom activity status ham.activity.ActivityType.CustomActivityStatus')
         if(!args[1]) return msg.reply('Please write a custom activity status')
         let argslice = args.slice(2).join(" ");
@@ -261,6 +268,7 @@ bot.on('message', async msg=>{
         case 'rules':
         const rulesEmbed = new MessageEmbed()
         .setTitle('Rules for Ham Headquarters')
+        .setColor('#f7a3a3')
         .setDescription('Rules by Mickeyds11')
         .addField('Rule #1', 'Absolutely no racism, discrimination, or harassment of any kind in any of the text or voice channels.\n These will NOT be tolerated and will result in a permanent ban.')
         .addField('Rule #2', 'No spamming (copypastas)  and ear-raping on the text channels and voice channels respectively \nNo one likes to be spammed or ear-raped. Doing so will get you muted.')
@@ -274,6 +282,7 @@ bot.on('message', async msg=>{
         if(!args[2]) {msg.channel.send('Please specify your feature')} else {
         const playingEmbed = new MessageEmbed()
         .setTitle('now playing:')
+        .setColor('#f7a3a3')
         .setDescription(args[1] + ' (Feat: ' + args[2] +') \n───────────:white_circle:────── ◄◄⠀▐▐⠀►► 𝟸:𝟷𝟾 / 𝟹:𝟻𝟼⠀───○ :loud_sound:')
         msg.channel.send(playingEmbed)
         }}
@@ -321,8 +330,8 @@ case 'commands':
             .addField('Command #4', 'the farm (says "im sorry, we go by ham headquarters now, get with the times.")')
             .addField('Command #5', 'roast eric (says "@Ericlul#8981 kinda cringe")')
             .addField('Command #6', 'ham commands (gives a list of basic commands as well as describes what they do and the different variations of text to execute them)')
-            .addField('Command #7', 'intimidation (replys "INTIMIDATION" with the attachment `https://media.discordapp.net/attachments/678502901408333824/720865873014816779/unknown.png?width=677&height=677)')
-            .addField('Command #8', 'fuck hambot (replys "heck you kid ur adopted" with the attachment `https://cdn.discordapp.com/attachments/678502901408333824/720879090042929172/no_u.mp4)')
+            .addField('Command #7', 'intimidation (replys "INTIMIDATION" with the attachment `https://media.discordapp.net/attachments/678502901408333824/720865873014816779/unknown.png?width=677&height=677)`')
+            .addField('Command #8', 'fuck hambot (replys "heck you kid ur adopted" with the attachment `https://cdn.discordapp.com/attachments/678502901408333824/720879090042929172/no_u.mp4)`')
             .addField('Command #9', 'ham (replys "ham")')
             .addField('Command #10', 'ham listening (sets activity status to "listening to ham")')
             .addField('More Commands', 'Say "ham commands 2, pg 2, pg2, page2, or page 2 for more commands!"')
@@ -334,7 +343,7 @@ case 'commands':
             .setDescription('')
             .addField('Command #11', 'ham playing (sets activity status to "playing with ham")')
             .addField('Command #12', 'watching (sets activity status to "watching ham)')
-            .addField('Command #13', 'kaotics new album (sends a link to `https://www.youtube.com/watch?v=2Nvamnma_Aw&feature=youtu.be&t=35)')
+            .addField('Command #13', 'kaotics new album (sends a link to `https://www.youtube.com/watch?v=2Nvamnma_Aw&feature=youtu.be&t=35)`')
             .addField('Command #14', 'ham crazy (reacts with the scream emoji then "NOWAY" in regional indicator symbol letter emojis)')
             .addField('Command #15', 'ham cancer (generates an image of you being cancer)')
             .addField('Command #16', 'ham song (ham.song.(songname).(feature))')
