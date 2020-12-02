@@ -1,15 +1,10 @@
 # HamBot
-A meme discord bot originally made for Mickeyds11's server
+basically a simp discord bot
 
 How to use
-simply open up config.json in your IDE/notepad and change the value of token to your token
-then install all the dependencies in NPM besides node.js obviously.
-
+install dependencies in node.js version 12
 
 Dependencies
-
-node.js
-
 discord.io
 discord.js
 cheerio
@@ -17,3 +12,5 @@ request
 ms
 fs
 canvas
+
+Also edit the config.json file for your preferences and discord bot token
