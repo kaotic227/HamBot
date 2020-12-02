@@ -1,3 +1,5 @@
 {
-"token": "YOUR_TOKEN"
+"token": "YOUR_TOKEN", 
+"streamer": "https://www.twitch.tv/STREAMER_YOU_SIMP",
+"messagesinconsole": true
 }
