@@ -1,5 +1,6 @@
-const {Client,Attachment,MessageEmbed, Message,
-} = require('discord.js');
+//Remember to edit the config.json file for your preferences and discord bot token
+
+const {Client,Attachment,MessageEmbed,Message,WebhookClient} = require('discord.js');
 const Discord = require('discord.io');
 const bot = new Client();
 const cheerio = require('cheerio')
@@ -8,108 +9,69 @@ const ms = require('ms')
 const fs = require('fs')
 const config = require('./config.json');
 const Canvas = require('canvas');
-
+const prefix = 'ham ';
 bot.login(config.token);
-let activitySet1 = Math.floor(Math.random() * 3) + 1;
+
+
 bot.on('ready', () =>{
 console.log('Initiating Project R.U.B');
-let activitySet = Math.floor(Math.random() * 3) + 1;
-    switch(activitySet){
+let statusRandom = Math.floor(Math.random() * 3) + 1;
+var statusArray = ['Ham', 'With Ham', 'HAM', 'LISTENING', 'PLAYING', 'WATCHING', 'STREAMING']
+    switch(statusRandom){
         case 1:
-        bot.user.setActivity('Ham', { type: 'LISTENING' });
+        bot.user.setActivity(statusArray[1], { type: statusArray[4] });
         break
         case 2:
-        bot.user.setActivity('With Ham', { type: 'PLAYING' });
+        bot.user.setActivity(statusArray[2], { type: statusArray[5] });
         break;
         case 3:
-        bot.user.setActivity('Ham', { type: 'WATCHING' });
+        bot.user.setActivity(statusArray[1], { type: statusArray[6] });
         break;
     }
 })
 
-var ver = 20.8
+//Messages in console (does not log dm messages because of errors)
+if(config.messagesinconsole == true) {bot.on('message', msg=>{if(msg.channel.type == 'text') {console.log(msg.member.user.tag + ' ' + msg.content)}})}
 
-const prefix = 'ham ';
 
+//Congrats to the king
 bot.on('message', msg=>{
-    switch(msg.channel.id){
-        case '737067242100883586':
-        case '738309113867403336':
-        case '739617511548387438':
+    switch(msg.author.id){
+        case '338036054114435074':
         msg.react('🗿')
+        msg.react('👑')
         break;
-    }})
+}})
 
-bot.on('guildMemberAdd', msg=>{
-if(msg.guild.id == '737065647363719240') {
-msg.member.roles.add('737066155201789992');
-}
-})
 
 //STREAM DETECTION START
 bot.on('message', msg=>{
+if(msg.content.includes(config.streamer) && msg.channel.type == 'text') {
+if(config.streamer.startsWith('https://www.twitch.tv/')) {
+    bot.user.setActivity("HAM GOD", {type: "STREAMING", url: config.streamer});
+    setTimeout(function(){ bot.status }, 5400000 /* < 1 hour + 15 min */);
+} else {throw 'Streamer name must be full twitch URL'}}})
 
-if(msg.channel.type == 'text') {
-if(msg.content == '@everyone mickeyds11 went live on Twitch') {bot.user.setActivity("HAM GOD", {type: "STREAMING", url: "https://www.twitch.tv/mickeyds11"});setTimeout(function(){
-    switch(activitySet1){
-        case 1:
-        bot.user.setActivity('Ham', { type: 'LISTENING' });
-        break
-        case 2:
-        bot.user.setActivity('With Ham', { type: 'PLAYING' });
-        break;
-        case 3:
-        bot.user.setActivity('Ham', { type: 'WATCHING' });
-        break;
-    }
-    
-}, ms('2h'));
-}
-if(msg.author.id == '338036054114435074'){ 
-if(msg.content.includes('twitch.tv/mick')) {bot.user.setActivity("HAM GOD", {type: "STREAMING", url: "https://www.twitch.tv/mickeyds11"});
-setTimeout(function(){
-    switch(activitySet1){
-        case 1:
-        bot.user.setActivity('Ham', { type: 'LISTENING' });
-        break
-        case 2:
-        bot.user.setActivity('With Ham', { type: 'PLAYING' });
-        break;
-        case 3:
-        bot.user.setActivity('Ham', { type: 'WATCHING' });
-        break;
-    }
-    
-}, ms('2h'));
-}
-}}})
-//STREAM DETECTION END
 
 //REGULAR COMMANDS START
 bot.on('message', msg=>{
 if(msg.channel.type == 'text') {
 var huodfh = msg.content.toLowerCase();
-if(huodfh.includes('the farm')) {msg.channel.send('im sorry, we go by ham headquarters now, get with the times.')}
 if(huodfh.includes('who asked') || huodfh.includes('who tf asked') || huodfh.includes('who the fuck asked') ) {msg.channel.send('holy shit that was a LOL moment YOU just got beaned on 🤡 🤡 🤡')}
 }})
 
 bot.on('message', msg=>{
 if(msg.channel.type == 'text') {
-    let msgContentLowerCase = msg.content.toLowerCase();
-    if(msgContentLowerCase.startsWith("so heres the thing")){
+    let msgLow = msg.content.toLowerCase();
+    if(msgLow.startsWith("so heres the thing")){
         msg.reply('gimme')
     }
-
-    console.log(msg.content);
     
     switch(msg.content.toLowerCase()){
-
+    //some of the first commands created for hambot id recommend deleting or at least editing this if you are using this for a different streamer 
+    
     case 'fuck hambot':
-    case 'fuck Hambot':
-    case 'fuck HamBot':
     case 'fuck ham bot':
-    case 'fuck Ham bot':
-    case 'fuck Ham Bot':
     msg.reply("heck u kid ur adopted", {files: ["https://cdn.discordapp.com/attachments/678502901408333824/720879090042929172/no_u.mp4"]});
     break;
     
@@ -143,15 +105,9 @@ if(msg.channel.type == 'text') {
     case 'ham raid osamas nut cave':
     msg.channel.send('https://www.twitch.tv/osamus_nut_cave')
     break;
-
-    case 'ham version':
-    case 'ham ver':
-    case 'ham info':
-    msg.channel.send('version ' + ver)
-    break;
     
     case 'ham help':
-    msg.channel.send('nothing here, but do "ham commands" for a list of commands')
+    msg.channel.send('no help for you bubby boy, but say "ham commands" for a list of commands')
     break;
 
     case 'ham listening':
@@ -182,32 +138,22 @@ if(msg.channel.type == 'text') {
     case 'ham steamed':
     msg.channel.send('https://youtu.be/MP6jyY2rs9w')
     break;
-    case 'ham steamed secret':
-    msg.channel.send('https://youtu.be/MP6jyY2rs9w ||hehe its a burger||')
-    break;
 
 
 }}})
 
 
-//REGULAR COMMANDS END
-
-
-
-
-
-
-
 //ADVANCED COMMANDS START
 bot.on('message', async msg=>{
-    if(msg.channel.type == 'text') {
+    if(msg.channel.type == 'text' && msg.content.toLowerCase().startsWith(prefix)) {
+    
     let args = msg.content.substring(prefix.length).split(" ")
-
+    var textArgument = args.slice(1).join(" ");
     switch(args[0].toLowerCase()){
 
         
     case '8ball':
-    
+    //Basic 8ball command
     if(!args[0]) return msg.reply('Please ask a question')
         if(!args[1]) {msg.channel.send('Please specify question')} else {
         let replies = ["As I see it, yes.", "Ask again later.", "Better not tell you now.", "cannot predict now", "Conentrate and ask again", "Don't count on it.", "It is certain", "It is decidedly so.", "Most likely", "My reply is no", "My sources say no", "Outlook not so good.", "outlook good", "Reply hazy, try again", "Signs pount to yes", "Very doubtful", 'without a doubt', "yes", "you may rely on it"];
@@ -222,64 +168,74 @@ bot.on('message', async msg=>{
         msg.channel.send('You said "' + question + questionmark +'" the Magic 8ball said "' + replies[result] + '"')
     }
         break;
-        
-        case 'activity':
-        if(msg.member.roles.cache.find(r => r.name === "Admin") || msg.member.roles.cache.find(r => r.name === "Bot") || msg.member.roles.cache.find(r => r.name === "HAMGOD")) {
-        if(!args[0]) return msg.reply('Please write an activity type and custom activity status ham.activity.ActivityType.CustomActivityStatus')
-        if(!args[1]) return msg.reply('Please write a custom activity status')
-        let argslice = args.slice(2).join(" ");
-        let argslice2lwr = args.slice(2).join(" ").toLowerCase();
-        let argslice3 = args.slice(3).join(" ");
-        let args2upper = args[1].toUpperCase();
-        if(argslice2lwr.startsWith('to')) {bot.user.setActivity(argslice3, { type: 'LISTENING' });} else {
-        bot.user.setActivity(argslice, { type: args2upper });
+
+        case 'uwu':
+        //uwu text generator
+        var text = args.slice(1).join(" ")
+        let uwu = ''
+        var i
+        if(!text) {msg.channel.send('specify message to uwuify uwu')} else {
+        for (i = 0; i < text.length; i++) {
+        let a = false
+        switch(text[i]) {
+            case 'r':
+            case 'l':
+            uwu += 'w'
+            a = true
+            break;
+            case 'R':
+            case 'L':
+            uwu += 'W'
+            a = true
+            break;
         }
-        } else {msg.channel.send('Insufficient permissions')}
-        break;
-        
-        
-        case 'bug', 'bugs':
-        let jsonString = 
-        fs.writeFile('./bugs.json', jsonString, err => {
-            if (err) {
-                    console.log('Error writing file', err)
-            } else {
-                    console.log('Successfully wrote file')
-            }})
+        switch(a) {
+            case false:
+            uwu += text[i]
+            break;
+        }}
+        msg.channel.send(uwu)}
         break;
 
-        //case 'simp':
-        //let streamer1 = ['kitty', 'kitten', 'kittycat', 'cat', 'dog' , 'puppy', 'doggo']
-        //let streamer1Random = Math.floor(Math.random() * 7) + 1;
-        //let steamer2 = ['snuggler', 'petter', 'comforter', 'lover', 'adorer']
-        //let streamer2Random = Math.floor(Math.random() * 5) + 1;
-        //let streamerAmt1Response = ['Ayo ' + dollarAmt + ' bucks!', 'uwu thx for the ' + dollarAmt + ' dowwas senpai uwu', '... (cricket sounds)']
-        //let streamerAmt2Response = ['omg thank you so much for the ' + dollarAmt + ' dollars', 'uwu senpai someone just donated ' + dollarAmt + ' dowwaws uwu thank you so much uwu senpai', '... she was afk']
-        //let streamerAmt3Response = ['HOLY FUCKING SHIT SOMEONE JUST DONATED ' + dollarAmt + ' DOLLARS OMG', 'uwu i think i-im gonna cwy u-uwu senpai thank you so much uwu', '... she was afk']
-        //let streamerAmtResponseRNG = Math.floor(Math.random() * 3) + 1;
-        //var response
-        //var moneyResponse
-        //var dollarAmt = args[1]
-        //if(dollarAmt < 100){moneyResponse = 1}
-        //if(dollarAmt > 100){if(dollarAmt < 1000){moneyResponse = 2} else {moneyResponse = 3}}
-        //const simpEmbed = new MessageEmbed()
-        //.setTitle(msg.author.username + ' Donates ')
-        //break;
+        case 'simp':
+        //im not even going to begin trying to explain this
+        if(!args[1] || !textArgument.match("-?\\d+(\\.\\d+)?")) {msg.channel.send('specify dowawws pls uwu and make suwe you message has onwy numbews in it')} else {
+        //Name & Random
+        let a1 = ['kitty', 'kitten', 'kittycat', 'cat', 'dog' , 'puppy', 'doggo']
+        let a2 = ['snuggler', 'petter', 'comforter', 'lover', 'adorer']
+        let random = Math.floor((Math.random() * 6) + 1)
+        let random2 = Math.floor((Math.random() * 4) + 1)
+        let random3 = Math.floor((Math.random() * 2) + 1)
+        let a5 = 'xX_' + a1[random] + '_' + a2[random2] + '_Xx'
+        //Reaction
+        let b1 = textArgument
+        let b2 = ['uwu thx for the '+ b1 +' dowwas senpai uwu', 'uwu senpai someone just donated ' + b1 + ' dowwaws uwu thank you so much uwu senpai', 'uwu i think i-im gonna cwy u-uwu senpai thank you so much uwu']
+        let b4 = ['i think she likes me hehe better donate another' + b1 + 'dollars', 'she has a bf hehe she will be mine DAREK', 'dont cry precious hehe *sips gfuel*']
+        //Message
+        const simpEmbed = new MessageEmbed()
+        .setTitle(msg.author.username + ' Donated ' + b1 + ' dollars to ' + a5)
+        .setDescription('||' + b2[random3] + '|| \n *whispers to self* \n ||' + b4[random3] + '||')
+        msg.channel.send(simpEmbed)
+        
+        }
+        break;
+
         case 'rules':
-        const rulesEmbed = new MessageEmbed()
-        .setTitle('Rules for Ham Headquarters')
-        .setColor('#f7a3a3')
-        .setDescription('Rules by Mickeyds11')
-        .addField('Rule #1', 'Absolutely no racism, discrimination, or harassment of any kind in any of the text or voice channels.\n These will NOT be tolerated and will result in a permanent ban.')
-        .addField('Rule #2', 'No spamming (copypastas)  and ear-raping on the text channels and voice channels respectively \nNo one likes to be spammed or ear-raped. Doing so will get you muted.')
-        .addField('Rule #3', 'No doxxing or personal attacks allowed in any of the channels.\n Banter is okay. Anything above that is not allowed.')
-        .addField('Rule #4', "No political or religious talks allowed.\n Let's keep this server a happy, positive, and welcoming place for all people.")
-        .addField('Rule #5', 'No NSFW content allowed, may be it gore, etc.\n No one wants to see those kinds of stuff.\n\n\n in #NSFW only please')
+        //Rules listed on the discord server for twitch.tv/mickeyds11 recreated in an embed
+            const rulesEmbed = new MessageEmbed()
+            .setTitle('Rules for the Ham Fam Discord Server')
+            .setColor('#f7a3a3')
+            .setDescription('Rules are by Mickeyds11 and are not HamBot TOS')
+            .addField('Rules', "`Absolutely no racism, discrimination, or harassment of any kind in any of the text or voice channels. These will NOT be tolerated and will result in a permanent ban.` \n\n `No spamming (copypastas) and ear-raping on the text channels and voice channels respectively, No one likes to be spammed or ear-raped. Doing so will get you muted.` \n\n `No doxxing or personal attacks allowed in any of the channels. Banter is okay. Anything above that is not allowed.` \n\n `No political or religious talks allowed. Let's keep this server a happy, positive, and welcoming place for all people.` \n\n `No NSFW content allowed, may be it gore, etc. No one wants to see those kinds of stuff.`\n\n `in #NSFW only please`")
         msg.channel.send(rulesEmbed)
         break;
+        
         case 'song':
-        if(!args[1]) {msg.channel.send('Please specify song name')} else {
-        if(!args[2]) {msg.channel.send('Please specify your feature')} else {
+        //displays song name and feature in some ascii art
+        let argslice = args.slice(1).join(" ");
+        if(!args[1] || !argslice || !args[2]) {msg.channel.send('Please specify song name and feature')} else {
+        if(args[3]) {msg.channel.send('songs and features can have spaces between them but not within them')} else {
+        
         const playingEmbed = new MessageEmbed()
         .setTitle('now playing:')
         .setColor('#f7a3a3')
@@ -287,7 +243,9 @@ bot.on('message', async msg=>{
         msg.channel.send(playingEmbed)
         }}
         break;
+        
         case 'cancer':
+        //litterally a blatant command stolen from dankmemer bot
         const canvas = Canvas.createCanvas(640, 472);
         const ctx = canvas.getContext('2d');
         const backround = await Canvas.loadImage('./Image_manipulation/cancer.png')
@@ -297,6 +255,7 @@ bot.on('message', async msg=>{
         msg.channel.send({ files: [canvas.toBuffer()]});
         break;
         case 'crazy':
+        //shit b crazy doe
         msg.react('😱')
         msg.react('🇳')
         msg.react('🇴')
@@ -319,70 +278,14 @@ let args = msg.content.substring(prefix.length).split(" ")
 switch(args[0]){
 case 'command':
 case 'commands':
-            const commandsEmbed = new MessageEmbed()
-            
+        //all commands that are featured in this build of hambot are listed here for people to play around with
+        const commandsEmbed = new MessageEmbed()
             .setTitle('Ham Commands')
             .setColor('#f7a3a3')
-            .setDescription('')
-            .addField('Command #1', 'ham raid osamas nut cave (posts a link of osamus_nut_cave on twitch)')
-            .addField('Command #2', 'wheres the thing? (says "*hands you the thing*")')
-            .addField('Command #3', 'ham help (says "nothing here, but do "ham commands" for a list of commands")')
-            .addField('Command #4', 'the farm (says "im sorry, we go by ham headquarters now, get with the times.")')
-            .addField('Command #5', 'roast eric (says "@Ericlul#8981 kinda cringe")')
-            .addField('Command #6', 'ham commands (gives a list of basic commands as well as describes what they do and the different variations of text to execute them)')
-            .addField('Command #7', 'intimidation (replys "INTIMIDATION" with the attachment `https://media.discordapp.net/attachments/678502901408333824/720865873014816779/unknown.png?width=677&height=677)`')
-            .addField('Command #8', 'fuck hambot (replys "heck you kid ur adopted" with the attachment `https://cdn.discordapp.com/attachments/678502901408333824/720879090042929172/no_u.mp4)`')
-            .addField('Command #9', 'ham (replys "ham")')
-            .addField('Command #10', 'ham listening (sets activity status to "listening to ham")')
-            .addField('More Commands', 'Say "ham commands 2, pg 2, pg2, page2, or page 2 for more commands!"')
-            .setFooter('Support at https://bit.ly/2ZarDN3')
-            
-            const commandsPg2Embed = new MessageEmbed()
-            .setTitle('Ham Commands')
-            .setColor('#f7a3a3')
-            .setDescription('')
-            .addField('Command #11', 'ham playing (sets activity status to "playing with ham")')
-            .addField('Command #12', 'watching (sets activity status to "watching ham)')
-            .addField('Command #13', 'kaotics new album (sends a link to `https://www.youtube.com/watch?v=2Nvamnma_Aw&feature=youtu.be&t=35)`')
-            .addField('Command #14', 'ham crazy (reacts with the scream emoji then "NOWAY" in regional indicator symbol letter emojis)')
-            .addField('Command #15', 'ham cancer (generates an image of you being cancer)')
-            .addField('Command #16', 'ham song (ham.song.(songname).(feature))')
-            .addField('Command #17', 'ham rules (sends an embed of the ham headquarters rules)')
-            .addField('Command #18', 'ham bug (ham.bug.(bug) allows anyone to submit a bug to kaotic through a simple command)')
-            .addField('Command #19', 'ham activity (ham.activity.(activitytype).(activity)) WARNING ONLY AVAILABLE TO ROLES NAMED Admin, Bot, or HAMGOD')
-            .addField('Command #20', 'ham 8ball (ham.8ball.(question) allows anyone with the use of this command to ask the 8ball gods their deepest questions)')
-            .addField('More Commands', 'Say "ham commands 3, pg 3, pg3, page3, or page 3 for more commands!"')
-            .setFooter('Support at https://bit.ly/2ZarDN3')
-            const commandsPg3Embed = new MessageEmbed()
-            .setTitle('Ham Commands')
-            .setColor('#f7a3a3')
-            .setDescription('')
-            .addField('Command #20', 'ham steamed (sends a youtube link to the clip of where it all happened)')
-            .addField('Command #21', 'ham devs (credits all the developers of hambot)')
-            .addField('Command #22', 'ham pic (sends a random picture out of 20 of ham)')
-            .setFooter('Support at https://bit.ly/2ZarDN3')
+            .setDescription("Most commands cannot be executed in DM form \n\n `fuck hambot` \n `ham` \n `ham 8ball` \n `ham cancer` \n `ham commands` \n `ham developers` \n `ham help` \n `ham listening` \n  `ham pics` \n  `ham playing` \n `ham raid osama's nut cave` \n`ham rules` \n`ham simp` \n `ham song` \n `ham steamed` \n `ham uwu` \n `ham watching` \n `intimidation` \n `kaotics new album` \n `roast eric` \n `wheres the thing`")
         
-    let commandsSwitch = args.slice(1).join(" ");
-    switch (commandsSwitch.toLowerCase()){
-    case '':
-    msg.author.send(commandsEmbed)
-    break;
-    case '2':
-    case 'pg 2':
-    case 'pg2':
-    case 'page2':
-    case 'page 2':
-    msg.author.send(commandsPg2Embed)
-    break;
-    case '3':
-    case 'pg 3':
-    case 'pg3':
-    case 'page3':
-    case 'page 3':
-    msg.author.send(commandsPg3Embed)
-    break;
-    }
+       msg.channel.send(commandsEmbed)
     break;
 }})
-//HAM COMMANDS END
-//ADVANCED COMMANDS END
+
+
